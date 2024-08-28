@@ -1,0 +1,20 @@
+FDL Example_AdditionalInfo1 {
+  EXAMPLES "SomeExample" := {
+    "A"; "B";
+  }
+  EXPLICIT_FALSE {
+    "X";"Y"
+  }
+  SUPERSET_OF {
+    "Example_AdditionalInfo2"
+  }
+  SUBSET_OF {
+    "Stetigförderer_Ex_advanced"
+  }
+  OVERLAPS {
+
+  }
+  OPPOSES {
+    "Unstetigförderer_Ex_simple"
+  }
+}

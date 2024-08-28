@@ -1,0 +1,6 @@
+FDL UnknownAliasIdentifier {
+  EQUATION m^^{.} = V^^{.} * @rho_{"s"}
+  WITH:
+    ALIASES:
+      p^^{.} = "Massestrom";
+}

@@ -1,0 +1,6 @@
+FDL InvalidCommand {
+  EQUATION m^^{.} = V^^{.} * @peter_{"s"}
+  WITH:
+    ALIASES:
+      m^^{.} = "Massestrom";
+}

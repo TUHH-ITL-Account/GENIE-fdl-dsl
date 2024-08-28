@@ -1,0 +1,7 @@
+FDL Ladeeinheit_TO {
+  TRADE-OFF "Ladeeinheit" :=
+  + {"macht Dinge transportierbar mit verschiedenen Fördermitteln";
+     "macht Dinge effizienter transportierbar"}
+  - {"Kosten";
+     "Abfall"}
+}

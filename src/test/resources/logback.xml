@@ -1,0 +1,20 @@
+<!-- (c) https://github.com/MontiCore/monticore -->
+<configuration>
+
+  <!-- this is a console appender -->
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
+    <encoder>
+      <pattern>
+        %-7([%level]) %logger{26} %message%n
+      </pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+
+</configuration>

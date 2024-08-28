@@ -1,0 +1,66 @@
+package fdl;
+
+import de.monticore.literals.*;
+
+component grammar MathExpressions extends de.monticore.MCBasics, MCLiteralsBasis {
+
+  interface Expression;
+  interface InfixExpression = left:Expression operator:"" right:Expression;
+
+  //NameExpression implements Expression <350> = Name;
+  LiteralExpression implements Expression <340> = Literal; //vielleicht besser auf Nummern begrenzen?
+
+  PlusPrefixExpression implements Expression <210> = "+" Expression;
+  MinusPrefixExpression implements Expression <210> = "-" Expression;
+
+  MultExpression implements Expression <180>, InfixExpression =
+    left:Expression operator:"*" right:Expression;
+
+  DivideExpression implements Expression <180>, InfixExpression =
+    left:Expression operator:"/" right:Expression;
+
+  ModuloExpression implements Expression <180>, InfixExpression =
+    left:Expression operator:"%" right:Expression;
+
+  PlusExpression implements Expression <170>, InfixExpression =
+    left:Expression operator:"+" right:Expression;
+
+  MinusExpression implements Expression <170>, InfixExpression =
+    left:Expression operator:"-" right:Expression;
+
+  AssignmentExpression implements Expression <60> = <rightassoc>
+      left:Expression
+      operator: [ "=" ]
+      right:Expression;
+
+  LessEqualExpression implements Expression <150>, InfixExpression =
+      left:Expression operator:"<=" right:Expression;
+
+  GreaterEqualExpression implements Expression <150>, InfixExpression =
+    left:Expression operator:">=" right:Expression;
+
+  LessThanExpression implements Expression <150>, InfixExpression =
+    left:Expression operator:"<" right:Expression;
+
+  GreaterThanExpression implements Expression <150>, InfixExpression =
+    left:Expression operator:">" right:Expression;
+
+  BracketExpression implements Expression <310> = "(" Expression ")";
+
+  ExponentialExpression implements Expression <190> = base:Expression operator:"^" exponent:Expression;
+  RootExpression implements Expression <200> = "RT" "(" Expression "," Literal ")";
+  SquareRootExpression implements Expression <200> = "SQRT" "(" Expression ")";
+  LogarithmExpression implements Expression <200> = "LOG" "(" expression:Expression "," base:Literal ")";
+
+  ExponentialExpression2 implements Expression <200> = "POW" "(" base:Expression "," exponent:Expression ")" ;
+  MaxExpression implements Expression <200> = "MAX" "(" left:Expression "," right:Expression ")" ;
+  MinExpression implements Expression <200> = "MIN" "(" left:Expression "," right:Expression ")" ;
+  SumExpression implements Expression <200> = "SUM" "(" expression:Expression "," var:Expression ")" ;
+
+  SinusExpression implements Expression <200> = "SIN" "(" Expression ")" ;
+  CosinusExpression implements Expression <200> = "COS" "(" Expression ")" ;
+  TangensExpression implements Expression <200> = "TAN" "(" Expression ")" ;
+  ArcussinusExpression implements Expression <200> = "ARCSIN" "(" Expression ")" ;
+  ArcuscosinusExpression implements Expression <200> = "ARCCOS" "(" Expression ")" ;
+  ArcustangensExpression implements Expression <200> = "ARCTAN" "(" Expression ")" ;
+}

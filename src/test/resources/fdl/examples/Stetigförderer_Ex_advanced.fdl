@@ -1,0 +1,6 @@
+FDL Stetigförderer_Ex_advanced {
+  EXAMPLES "Stetigförderer" ["Fördermittel","Maschinerie"] := {
+    "Rollenbahn" { PROPERTIES: ["aufgeständert","ortsfest","Abwälzung"] } ;
+    "Bandförderer" { PROPERTIES: ["aufgeständert","ortsfest","Zugmittel"] }
+  }
+}

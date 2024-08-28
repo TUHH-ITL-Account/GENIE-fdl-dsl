@@ -1,0 +1,9 @@
+FDL Example_Seq {
+  SEQUENCE "Anziehien" := [
+    "Unterwäsche";
+    "Kleidung";
+    "Accesoires";
+    "Überbekleidung";
+    "Maske, weil Corona"
+  ]
+}

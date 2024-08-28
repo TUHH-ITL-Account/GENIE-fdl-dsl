@@ -1,0 +1,9 @@
+FDL UnknownSpecIdentifier {
+  EQUATION m^^{.} = V^^{.} * @rho_{"s"}
+  WITH:
+    ALIASES:
+      m^^{.} = "Massestrom";
+
+    SPECIFICATIONS:
+      w^^{.} = "length"/"time";
+}

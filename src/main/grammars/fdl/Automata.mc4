@@ -1,0 +1,29 @@
+package fdl;
+
+grammar Automata extends de.monticore.MCBasics, de.monticore.literals.MCCommonLiterals {
+
+  /** A ASTAutomaton represents a finite automata
+      @attribute name Name of the automata
+      @attribute states List of states
+      @attribute transitions List of transitions
+  */
+  Automaton = "AUTOMATON" "{" ((State | Transition | Relevancy) ";")* "}" ;
+
+  /** A ASTState represents a state of a finite automata
+      @attribute name Name of state
+      @attribute initial True if state is initial state
+      @attribute final True if state is a final state
+      @attribute states List of sub states
+      @attribute transitions List of transitions
+  */
+  State = "STATE" Name label:String (("<<" ["INIT"] ">>" ) | ("<<" ["FIN"] ">>" ))* ;
+
+  /** A ASTTransition represents a transition
+      @attribute from Name of the state from which the transitions starts
+      @attribute input Activation signal for this transition
+      @attribute to Name of the state to which the transitions goes
+  */
+  Transition = from:Name "-" input:String ">" to:Name ;
+
+  Relevancy = "RELEVANCY" "=" relevancy:["INPUTS_ONLY"|"ALL"] ;
+}

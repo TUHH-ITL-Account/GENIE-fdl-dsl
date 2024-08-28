@@ -1,0 +1,107 @@
+package fdl;
+
+grammar Fdl extends de.monticore.literals.MCCommonLiterals, MathExpressions, Automata {
+
+  fragment token NEWLINE = ('\r' '\n' | '\r' | '\n' );
+
+  /* Name überschreiben, dass es nicht auf _ enden kann; für subscripts */
+  @Override
+  token Name = ( 'a'..'z' | 'A'..'Z' | 'ä' | 'ö' | 'ü' | 'Ä' | 'Ö' | 'Ü') |
+    (( 'a'..'z' | 'A'..'Z' | '_' | 'ä' | 'ö' | 'ü' | 'Ä' | 'Ö' | 'Ü')
+    ( 'a'..'z' | 'A'..'Z' | '_' | '0'..'9' | '$' | 'ä' | 'ö' | 'ü' | 'Ä' | 'Ö' | 'Ü' | 'ß')*
+    ( 'a'..'z' | 'A'..'Z' | '0'..'9' | '$' | 'ä' | 'ö' | 'ü' | 'Ä' | 'Ö' | 'Ü' | 'ß')) ;
+
+  symbol scope FdlArtifact = "FDL" fdlName:Name "{" FdlType "}" ;
+
+  FdlNumber = SignedNumericLiteral ;
+
+  interface FdlType;
+
+  symbol Definition implements FdlType = "DEFINITION" term:String ":=" definition:String ;
+
+  StringList = "[" (String || ",")* "]" ;
+  StringSet = "{" (String || ";")* ";"? "}" ;
+
+  interface SetLogic;
+  Superset implements SetLogic = "SUPERSET_OF" superFdls:StringSet;
+  Subset implements SetLogic = "SUBSET_OF" subFdls:StringSet;
+  Overlap implements SetLogic = "OVERLAPS" overlapFdls:StringSet;
+  Oppose implements SetLogic = "OPPOSES" opposingFdls:StringSet;
+
+  ExplicitFalse = "EXPLICIT_FALSE" explicitFalse:StringSet;
+
+  AdditionalInfo = SetLogic | ExplicitFalse;
+
+  symbol Characteristics implements FdlType = "CHAR" object:String categories:StringList? ":="
+    characteristics:StringSet AdditionalInfo* ;
+
+  interface ExampleExtensionElement ;
+  ExampleProperties implements ExampleExtensionElement = "PROPERTIES:" "[" (String || ",")* "]" ;
+  ExampleImages implements ExampleExtensionElement = "IMAGES:" "[" (String || ",")* "]" ;
+  ExampleExtension = "{" (ExampleExtensionElement || ";")* ";"? "}" ;
+
+  Example = object:String ExampleExtension? ;
+  symbol Examples implements FdlType = "EXAMPLES" object:String categories:StringList? ":="
+    "{" (Example || ";")* ";"? "}" AdditionalInfo* ;
+
+  Advantages = "+" "{" (String || ";")* ";"? "}" ;
+  Disadvantages = "-" "{" (String || ";")* ";"? "}" ;
+  symbol TradeOff implements FdlType = "TRADE-OFF" object:String ":=" Advantages Disadvantages ;
+
+  symbol Sequence implements FdlType = "SEQUENCE" object:String ":=" "[" (String || ";")+ ";"? "]" ;
+
+  symbol Figure implements FdlType = "FIGURE" "FILE" filename:String "LABELS" "{" (Label || ";")+ ";"? "}" ;
+  Position = "(" x:Digits ";" y:Digits ")" ;
+  Label = term:String ":" Position ;
+
+  enum Topsymbol = "." | "^" | "~" | "*" | "-" ;
+  Topscript = "^^{" symbol:Topsymbol "}" ;
+  Superscript = "^{" Expression "}" ;
+  Subscript = "_{" String "}" ; //_ als Indikator clasht mit _ in originalem Name
+
+  SymbolCommand = "@" Name ; //bei zsm schreiben wird $ als Name interpretiert???
+  Identifier = Name | SymbolCommand ;
+  Index implements Expression <359> = object:Expression "[" index:Expression "]" ;
+  ExtendedName implements Expression <360> = Identifier Topscript? Superscript? Subscript?;
+  FunctionExpression implements Expression <361> = identifier:ExtendedName "(" arguments:(ExtendedName || ",")+ ")" ;
+
+  Alias = ExtendedName "=" term:String ;
+  AliasBlock = "ALIASES:" (Alias||";")+ ";"? ;
+
+  Specification = ExtendedName "=" Expression isList:["LIST"]? ;
+  SpecificationBlock = "SPECIFICATIONS:" (Specification||";")+ ";"? ;
+
+  enum Spaces = "INT" | "FLOAT" ;
+  SetRef = "{" (FdlNumber || ",")+ "}" ;
+  enum RoundingModes = "ROUND_UP" | "ROUND_DOWN" | "ROUND_NEAREST" ;
+  SpaceSpecification = "IN" (Spaces|SetRef) ("[" decimalplace:Digits "]")? force:["!"]? RoundingModes? ;
+  Parameter = "PARAMETER" SpaceSpecification ;
+  ConstantRef = "CONSTANT" ref:String? ;
+  RangeSpecification = start:FdlNumber ("-" end:FdlNumber)? unit:Expression? SpaceSpecification? ;
+  Reference = ExtendedName "=" (RangeSpecification|Parameter|ConstantRef) ;
+  ReferenceBlock = "REFERENCES:" (Reference||";")+ ";"? ;
+  ImageReference = caption:String "=" filename:String ;
+  ImageBlock = "IMAGES:" (ImageReference||";")+ ";"? ;
+
+  WithPart = "WITH:" (AliasBlock | SpecificationBlock | ReferenceBlock | ImageBlock)+ ;
+  symbol Equation implements FdlType = "EQUATION" Expression WithPart? ;
+
+  // Note: 'Constant' is already defined elsewhere
+  symbol ConstantNumber implements FdlType = "CONSTANT" term:String identifier:ExtendedName ":=" value:FdlNumber unit:Expression? ;
+
+  symbol Pattern implements FdlType = "PATTERN" object:String  ":=" Automaton ;
+
+  token HierarchyDepthIndicator = "--";
+  HierarchyLevel = depth:HierarchyDepthIndicator* levelName:String ;
+  symbol Hierarchy implements FdlType = "HIERARCHY" object:String ":=" "{" (HierarchyLevel NEWLINE*)* "}" ;
+
+  interface ProgressionContent ;
+  XAxis implements ProgressionContent = "X-AXIS" "=" xLabel:String ;
+  YAxis implements ProgressionContent = "Y-AXIS" "=" yLabel:String ;
+  Series implements ProgressionContent = "SERIES" lineTitle:String? "{" (Position || ",")* "}" ;
+  symbol Progression implements FdlType = "PROGRESSION" object:String ":=" "{" (ProgressionContent || ";")+ ";"? "}" ;
+
+  VariablePair = ExtendedName ":" SourceFdl:Name ;
+  VariableGroup = "{" (VariablePair || ";")* "}" ;
+  symbol VariableGroups implements FdlType = "VAR_GROUPS" "{" VariableGroup* "}" ;
+}

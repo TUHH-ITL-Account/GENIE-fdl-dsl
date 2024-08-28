@@ -1,0 +1,3 @@
+FDL Ladeeinheit_Def {
+  DEFINITION "Ladeeinheit" := "eine transportfähige Verpackung, die irgendein Gut zusammenhält"
+}

@@ -1,0 +1,40 @@
+FDL Example_VariableGroups {
+  VAR_GROUPS {
+    {
+      TL_{"FA"}:Fachlast_Eq
+    }
+    {
+      Q_{"LE"}:Fachlast_Eq
+    }
+    {
+      Q_{"AB"}:Fachlast_Eq
+    }
+    {
+      TL_{"BW"}:Fachlast_Eq
+    }
+    {
+      m^^{.}:Massestrom_Eq1 ; m^^{.}:Massestrom_Eq2
+    }
+    {
+      l_{"a"}:Massestrom_Eq1
+    }
+    {
+      m:Massestrom_Eq1
+    }
+    {
+      v:Massestrom_Eq1
+    }
+    {
+      c:Massestrom_Eq1
+    }
+    {
+      a:Massestrom_Eq1
+    }
+    {
+      V^^{.}:Massestrom_Eq2
+    }
+    {
+      @rho_{"s"}:Massestrom_Eq2
+    }
+  }
+}

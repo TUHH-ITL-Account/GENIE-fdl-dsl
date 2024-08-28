@@ -1,0 +1,57 @@
+---
+fdlnodes:
+  - FördermengeStückgut_Eq1:
+    id: fdl1
+    filename: FördermengeStückgut_Eq1.fdl
+    prereq: [Division]
+
+wmnodes:
+  - Mathematik:
+    id: mat1
+    children: [Division]
+  - Division:
+    id: mat2
+  - TUHH:
+    name: "TUHH"
+    id: tl1
+    children: [W]
+  - W:
+    name: "W Lehrstühle"
+    id: tl2
+    children: [W6-ITL]
+  - W6-ITL:
+    name: "W6 Institut für Technische Logistik"
+    id: tl3
+    children: [TL]
+  - TL:
+    name: "Technische Logistik"
+    id: tl4
+    children: [Transporttechnik, Kommisionierung]
+  - Transporttechnik:
+    name: "Transporttechnik"
+    id: asd
+    children: [Fördertechnik, Verkehrstechnik]
+  - Stetigförderer:
+      name: "Stetigförderer"
+      id: wm1
+      children: [Schüttgut, Stückgut, Schütt- und Stückgut]
+  - Unstetigförderer:
+      name: "Unstetigförderer"
+      id: wm2
+  - Fördertechnik:
+      name: "Fördermittel"
+      children: [Stetigförderer, Unstetigförderer]
+      id: wm3
+  - Schüttgut:
+      name: "Schüttgut"
+      id: wm4
+      children: [Becherwerk, Schneckenförderer, Schwingförderer]
+  - Stückgut:
+      name: "Stückgut"
+      id: wm5
+      children: [Kreisförderer, Rollenbahn]
+  - Schütt- und Stückgut:
+      name: "Schütt- und Stückgut"
+      id: wm6
+      children: []
+      fdls: []

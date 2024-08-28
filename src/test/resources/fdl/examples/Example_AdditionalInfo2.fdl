@@ -1,0 +1,11 @@
+FDL Example_AdditionalInfo2 {
+  EXAMPLES "SomeExample" := {
+    "C"; "D";
+  }
+  OPPOSES {
+    "Unstetigförderer_Ex_simple"
+  }
+  SUBSET_OF {
+    "Stetigförderer_Ex_advanced"
+  }
+}

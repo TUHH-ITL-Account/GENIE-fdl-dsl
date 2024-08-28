@@ -1,0 +1,14 @@
+FDL Ladeeinheit_Char {
+  CHAR "Ladeeinheit" ["Ladeeinheit"] := {
+    "Erhöhung der Umschlagleistung auf Grund besserer Handhabung und schnellerer Umlade-und Umschlagvorgäng";
+    "Schutz vor Umwelteinflüssen und Diebstahl";
+    "Sicherstellung der Entlastung von körperlicher Arbeit";
+    "Bessere Auslastung von Lager- und Transportkapazitäten durch Bündelung von Packstücken zu Einheiten";
+    "Entstehung von zusätzlichen Kosten für Ladehilfsmittel, Sicherungsmittel, Verpackungsmaschinen etc.";
+    "Grundbaustein der Ladungsbildung"
+  }
+  EXPLICIT_FALSE {
+    "Ist immer aus Metal.";
+    "Hat einen internen Antrieb.";
+  }
+}

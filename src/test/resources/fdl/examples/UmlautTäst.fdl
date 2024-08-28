@@ -1,0 +1,3 @@
+FDL UmlautTäst {
+  EQUATION ü = ö^{Ü}_{"Ö"} * Ä
+}

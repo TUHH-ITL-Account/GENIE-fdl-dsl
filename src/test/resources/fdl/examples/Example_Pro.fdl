@@ -1,0 +1,12 @@
+FDL Example_Pro {
+  PROGRESSION "Example Progression via Series" := {
+    X-AXIS = "Bananas eaten";
+    Y-AXIS = "Showers taken";
+    SERIES "Line1" {
+      (0;0),(10;15),(20;25),(30;40),(40;60),(60;95)
+    };
+    SERIES "Line2" {
+      (0;0),(10;15),(20;25),(30;40),(40;60),(60;95)
+    };
+  }
+}

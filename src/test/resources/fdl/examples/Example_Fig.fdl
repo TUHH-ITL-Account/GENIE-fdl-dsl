@@ -1,0 +1,10 @@
+FDL Example_Fig {
+  FIGURE
+  FILE
+    "Systematik12.png"
+  LABELS {
+    "Transportmittel" : (12;34) ;
+    "Transportroute" : (54;122) ;
+    "Transportgegenstand" : (0;0)
+  }
+}
